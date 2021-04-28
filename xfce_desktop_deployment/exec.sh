@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 if [[ "$(whoami)" != "root" ]]; then
   read -p "[ERROR] must be root!"
   exit 1
@@ -23,6 +25,7 @@ for module in "${modules[@]}"; do
   #git sparse-checkout set "${module}"
   git clone "https://github.com/ar18-linux/${module}.git"
   if [ -f "${module}/install.sh" ]; then
+    chmod +x "${module}/install.sh"
     "${module}/install.sh"
   fi
 done
