@@ -5,4 +5,5 @@ modules=(\
   psql_control\
   suspend\
   disable_lid_wake\
+  cf-19_calibrate_touchscreen\
 )
