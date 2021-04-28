@@ -13,13 +13,13 @@ mkdir "${script_dir}/temp"
 cd "${script_dir}/temp"
 
 for module in "${modules[@]}"; do
-  git clone \
-    --depth 1  \
-    --filter=blob:none  \
-    --sparse \
-    "https://github.com/ar18-linux/${module}" \
-  ;
-  cd "${module}"
-  git sparse-checkout set "${module}"
-  #git clone "https://github.com/ar18-linux/${module}.git"
+  #git clone \
+  #  --depth 1  \
+  #  --filter=blob:none  \
+  #  --sparse \
+  #  "https://github.com/ar18-linux/${module}" \
+  #;
+  #cd "${module}"
+  #git sparse-checkout set "${module}"
+  git clone "https://github.com/ar18-linux/${module}.git"
 done
