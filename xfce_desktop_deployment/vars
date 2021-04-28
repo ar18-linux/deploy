@@ -8,4 +8,5 @@ modules=(\
   cf-19_calibrate_touchscreen\
   set_headphone_volume_level_to_max\
   kill_focussed_window\
+  xfce-display_off\
 )
