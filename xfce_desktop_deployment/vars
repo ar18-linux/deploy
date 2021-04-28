@@ -1,3 +1,4 @@
 modules=(\
   screen_scale\
+  xfce_keyboard_shortcuts\
 )

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c06323cb-2aa0-4b17-809e-0d165970e77d" name="Default Changelist" comment="2" />
+    <list default="true" id="c06323cb-2aa0-4b17-809e-0d165970e77d" name="Default Changelist" comment="2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xfce_desktop_deployment/vars" beforeDir="false" afterPath="$PROJECT_DIR$/xfce_desktop_deployment/vars" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +15,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/xfce_desktop_deployment/vars" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/xfce_desktop_deployment/exec.sh" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1rnWgbaQUZCiF6815uoX92qwMcY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -29,6 +36,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../xfce_keyboard_shortcuts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.CommitDialog" />
   </component>
@@ -58,7 +66,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619612445944</updated>
-      <workItem from="1619612447700" duration="3674000" />
+      <workItem from="1619612447700" duration="5289000" />
     </task>
     <task id="LOCAL-00001" summary="first try">
       <created>1619613156835</created>
@@ -116,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619615588968</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="2">
+      <created>1619616212919</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1619616212919</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
