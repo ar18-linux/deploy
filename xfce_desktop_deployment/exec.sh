@@ -17,7 +17,7 @@ for module in "${modules[@]}"; do
     --depth 1  \
     --filter=blob:none  \
     --sparse \
-    "https://github.com/ar18-linux/${module}"
+    "https://github.com/ar18-linux/${module}.git"
   cd test-git-partial-clone
   git sparse-checkout set "${module}"
   #git clone "https://github.com/ar18-linux/${module}.git"
