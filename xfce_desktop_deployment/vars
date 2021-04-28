@@ -3,4 +3,5 @@ modules=(\
   screen_scale\
   xfce_keyboard_shortcuts\
   psql_control\
+  suspend\
 )
