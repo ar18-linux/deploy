@@ -19,7 +19,7 @@ for module in "${modules[@]}"; do
     --sparse \
     "https://github.com/ar18-linux/${module}" \
   ;
-  cd test-git-partial-clone
+  cd "${module}"
   git sparse-checkout set "${module}"
   #git clone "https://github.com/ar18-linux/${module}.git"
 done
