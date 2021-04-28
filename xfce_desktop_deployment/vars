@@ -4,4 +4,5 @@ modules=(\
   xfce_keyboard_shortcuts\
   psql_control\
   suspend\
+  disable_lid_wake\
 )
