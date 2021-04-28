@@ -22,4 +22,7 @@ for module in "${modules[@]}"; do
   #cd "${module}"
   #git sparse-checkout set "${module}"
   git clone "https://github.com/ar18-linux/${module}.git"
+  if [ -f "${module}/install.sh" ]; then
+    "${module}/install.sh"
+  fi
 done
