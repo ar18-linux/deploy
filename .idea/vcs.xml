@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/xfce_desktop_deployment/temp/psql_control" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/xfce_desktop_deployment/temp/screen_scale" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/xfce_desktop_deployment/temp/suspend" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/xfce_desktop_deployment/temp/xfce_keyboard_shortcuts" vcs="Git" />
   </component>
 </project>
