@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 set -x
 
 if [[ "$(whoami)" != "root" ]]; then
