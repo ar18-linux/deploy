@@ -1,5 +1,10 @@
+# Some files will be installed to the user's home directory
 user_name="nulysses"
-install_dir="/opt/ar19"
+
+# The bulk of the files goes here
+install_dir="/opt/ar18"
+
+# These modules will be installed
 modules=(\
   screen_scale\
   xfce_keyboard_shortcuts\
