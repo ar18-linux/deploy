@@ -13,6 +13,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${script_dir}/vars"
 
 export user_name="${user_name}"
+export install_dir="${install_dir}"
 
 mkdir "${script_dir}/temp"
 cd "${script_dir}/temp"
