@@ -1,4 +1,5 @@
 user_name="nulysses"
+install_dir="/opt/ar19"
 modules=(\
   screen_scale\
   xfce_keyboard_shortcuts\
