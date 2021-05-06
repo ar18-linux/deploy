@@ -16,4 +16,5 @@ modules=(\
   kill_focussed_window\
   xfce-display_off\
   disable_lid_button\
+  rclone_sync\
 )
