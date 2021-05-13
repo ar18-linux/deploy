@@ -17,5 +17,8 @@ modules=(\
   xfce_display_off\
   disable_lid_button\
   rclone_sync\
-  zsh_ar18_lib\
 )
+
+# Modules that will be installed as dependencies:
+# libstderred
+# zsh_ar18_lib
