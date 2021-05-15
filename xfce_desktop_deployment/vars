@@ -18,6 +18,7 @@ modules=(\
   disable_lid_button\
   rclone_sync\
   zsh_config\
+  emulate_right_click_touchscreen\
 )
 
 # Modules that will be installed as dependencies:
