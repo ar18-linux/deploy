@@ -20,6 +20,7 @@ modules=(\
   rclone_sync\
   zsh_config\
   emulate_right_click_touchscreen\
+  event_hooks\
 )
 
 # Modules that will be installed as dependencies:
