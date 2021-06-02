@@ -15,7 +15,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 export user_name="${user_name}"
 export install_dir="${install_dir}"
 
-mkdir "${script_dir}/temp"
+mkdir -p "${script_dir}/temp"
 cd "${script_dir}/temp"
 
 for module in "${modules[@]}"; do
