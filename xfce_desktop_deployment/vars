@@ -21,6 +21,7 @@ modules=(\
   zsh_config\
   emulate_right_click_touchscreen\
   event_hooks\
+  ar18_update\
 )
 
 # Modules that will be installed as dependencies:
