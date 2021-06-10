@@ -3,10 +3,7 @@
 set -e
 set -x
 
-if [[ "$(whoami)" != "root" ]]; then
-  read -p "[ERROR] must be root!"
-  exit 1
-fi
+read -s -p "foo:" foo
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
@@ -14,6 +11,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 export user_name="${user_name}"
 export install_dir="${install_dir}"
+export foo="${foo}"
 
 rm -rf "${script_dir}/temp"
 
@@ -32,6 +30,11 @@ for module in "${modules[@]}"; do
   git clone "https://github.com/ar18-linux/${module}.git"
   if [ -f "${module}/install.sh" ]; then
     chmod +x "${module}/install.sh"
-    "${module}/install.sh"
+    echo "${foo}" | sudo -Sk "${module}/install.sh"
   fi
 done
+
+git clone "https://github.com/ar18-linux/install_software.git"
+chmod +x install_software/exec.sh
+
+su - "${user_name}" -c "echo ${foo} | install_software/exec.sh"
