@@ -35,6 +35,6 @@ for module in "${modules[@]}"; do
 done
 
 git clone "https://github.com/ar18-linux/install_software.git"
-chmod +x install_software/exec.sh
+chmod +x install_software/install_software/exec.sh
 
-su - "${user_name}" -c "echo ${foo} | install_software/exec.sh"
+su - "${user_name}" -c "echo ${foo} | install_software/install_software/exec.sh"
