@@ -6,21 +6,6 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
-  autostarts
-  screen_scale
-  xfce_keyboard_shortcuts
-  psql_control
-  xfce_suspend
-  disable_lid_wake
-  cf-19_calibrate_touchscreen
-  set_headphone_volume_level_to_max
-  kill_focussed_window
-  xfce_display_off
-  disable_lid_button
-  rclone_sync
-  zsh_config
-  emulate_right_click_touchscreen
-  event_hooks
   ar18_update
 )
 
