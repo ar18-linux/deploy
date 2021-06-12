@@ -7,7 +7,6 @@ install_dir="/opt/ar18"
 # These modules will be installed
 modules=(
   ar18_update
-  autostarts
 )
 
 # Modules that will be installed as dependencies:
