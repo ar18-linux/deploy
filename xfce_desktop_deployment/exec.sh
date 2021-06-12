@@ -31,7 +31,7 @@ set -x
 
 . "${script_dir}/vars"
 
-if [ -z "${ar18_helper_functions+x}" ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(logname)/helper_functions/helper_functions.sh"; cd "${script_dir}"; fi
+if [ -z "${ar18_helper_functions+x}" ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; fi
 obtain_sudo_password
 
 export user_name="${user_name}"
