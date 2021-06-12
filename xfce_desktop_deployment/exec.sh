@@ -39,8 +39,6 @@ obtain_sudo_password
 
 export user_name="${user_name}"
 export install_dir="${install_dir}"
-echo "${user_name}"
-exit 1
 
 echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
