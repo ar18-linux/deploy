@@ -55,7 +55,7 @@ for module in "${modules[@]}"; do
   git clone "https://github.com/ar18-linux/${module}.git"
   if [ -f "${module}/install.sh" ]; then
     echo "${ar18_sudo_password}" | sudo -Sk chmod +x "${module}/install.sh"
-    . "${module}/install.sh"
+    "${module}/install.sh"
   fi
 done
 
