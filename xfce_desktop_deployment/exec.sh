@@ -36,7 +36,7 @@ obtain_sudo_password
 export user_name="${user_name}"
 export ar18_install_dir="${install_dir}"
 
-rm -rf "${script_dir}/temp"
+echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
 mkdir "${script_dir}/temp"
 cd "${script_dir}/temp"
@@ -53,14 +53,14 @@ for module in "${modules[@]}"; do
   git clone "https://github.com/ar18-linux/${module}.git"
   if [ -f "${module}/install.sh" ]; then
     echo "${ar18_sudo_password}" | sudo -Sk chmod +x "${module}/install.sh"
-    "${module}/install.sh"
+    . "${module}/install.sh"
   fi
 done
 
-git clone "https://github.com/ar18-linux/install_software.git"
-echo "${ar18_sudo_password}" | sudo -Sk chmod +x install_software/install_software/exec.sh
+#git clone "https://github.com/ar18-linux/install_software.git"
+#echo "${ar18_sudo_password}" | sudo -Sk chmod +x install_software/install_software/exec.sh
 
-install_software/install_software/exec.sh
+#install_software/install_software/exec.sh
 
 # End of script
 # Restore old shell values
