@@ -8,6 +8,7 @@ install_dir="/opt/ar18"
 modules=(
   ar18_update
   autostarts
+  bluetooth_headset_as_presenter
 )
 
 # Modules that will be installed as dependencies:
