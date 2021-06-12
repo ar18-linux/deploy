@@ -64,6 +64,7 @@ done
 
 # End of script
 # Restore old shell values
+set +x
 for option in "${shell_options[@]}"; do
   eval "${option}"
 done
