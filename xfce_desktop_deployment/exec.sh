@@ -35,9 +35,9 @@ set -x
 . "${script_dir}/vars"
 if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
 obtain_sudo_password
-#export -f ar18_install
+
 export user_name="${user_name}"
-export ar18_install_dir="${install_dir}"
+export install_dir="${install_dir}"
 
 echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
