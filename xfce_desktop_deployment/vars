@@ -9,6 +9,7 @@ modules=(
   ar18_update
   autostarts
   bluetooth_headset_as_presenter
+  cf-19_calibrate_touchscreen
 )
 
 # Modules that will be installed as dependencies:
