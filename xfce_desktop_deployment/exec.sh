@@ -7,7 +7,8 @@ LD_PRELOAD=
 # Determine the full path of the directory this script is in
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 script_path="${script_dir}/$(basename "${0}")"
-echo "script_path: ${script_path}"
+#Set PS4 for easier debugging
+export PS4='$(basename "${0}"):${LINENO}: '
 # Determine if this script was sourced or is the parent script
 if [ -z "${ar18_sourced_map+x}" ]; then
   declare -A -g ar18_sourced_map
