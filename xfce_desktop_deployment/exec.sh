@@ -10,7 +10,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${script_dir}/vars"
 
 export user_name="${user_name}"
-export install_dir="${install_dir}"
+export ar18_install_dir="${install_dir}"
 export foo="${foo}"
 
 rm -rf "${script_dir}/temp"
