@@ -24,6 +24,7 @@ if [ -z "${ar18_exit_map+x}" ]; then
 fi
 ar18_exit_map["${script_path}"]=0
 # Get old shell option values to restore later
+shopt -s inherit_errexit
 IFS=$'\n' shell_options=($(shopt -op))
 # Set shell options for this script
 set -o pipefail
