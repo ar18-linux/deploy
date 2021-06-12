@@ -10,6 +10,9 @@ modules=(
   autostarts
   bluetooth_headset_as_presenter
   cf-19_calibrate_touchscreen
+  disable_lid_wake
+  disable_lid_button
+  emulate_right_click_touchscreen
 )
 
 # Modules that will be installed as dependencies:
