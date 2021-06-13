@@ -15,6 +15,7 @@ modules=(
   disable_lid_wake
   disable_lid_button
   emulate_right_click_touchscreen
+  event_hooks
 )
 
 # Modules that will be installed as dependencies:
