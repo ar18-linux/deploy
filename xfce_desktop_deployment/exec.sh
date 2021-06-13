@@ -40,7 +40,7 @@ import_vars
 set +u
 ar18_deployment_target="${1}"
 if [ "${ar18_deployment_target}" = "" ]; then
-  if [ ! -f "$(cat "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target")" ]; then
+  if [ ! -f "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target" ]; then
     read -p "[ERROR]: Cannot read file to determine installed_target"
     exit 1
   else
