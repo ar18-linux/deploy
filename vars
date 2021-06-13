@@ -1,0 +1,5 @@
+module_name="xfce_desktop_deployment"
+
+if [ ! -v ar18_install_dir ]; then
+  install_dir="/opt/ar18"
+fi

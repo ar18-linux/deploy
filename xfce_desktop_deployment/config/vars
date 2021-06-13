@@ -1,37 +1,5 @@
-# Some files will be installed to the user's home directory
-user_name="nulysses"
-
-# The bulk of the files goes here
-install_dir="/opt/ar18"
-
-user_name="nulysses"
-
-# These modules will be installed
-modules=(
-  ar18_update # Update script
-  autostarts
-  bluetooth_headset_as_presenter
-  cf-19_calibrate_touchscreen
-  disable_lid_wake
-  disable_lid_button
-  emulate_right_click_touchscreen
-  event_hooks
-  install_software
-  kill_focussed_window
-  zsh_config
-  psql_control
-  rclone_sync
-  screen_scale
-  script_template
-  set_headphone_volume_level_to_max
-  setup_ssh_server
-  setup_tigervnc
-  suspend
-  xfce_display_off
-  xfce_keyboard_shortcuts
+# Deployment targets, each target should have its own file
+declare -g ar18_deployment_targets 
+ar18_deployment_targets=(
+  portable
 )
-
-# Modules that will be installed as dependencies:
-# libstderred
-# zsh_ar18_lib
-# GitBSLR

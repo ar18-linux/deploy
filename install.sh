@@ -1,6 +1,7 @@
 #!/bin/bash
+# ar18
 
-# Script template version 2021-06-12.02
+# Script template version 2021-06-12.03
 # Make sure some modification to LD_PRELOAD will not alter the result or outcome in any way
 LD_PRELOAD_old="${LD_PRELOAD}"
 LD_PRELOAD=
@@ -31,50 +32,16 @@ set -o pipefail
 set -eu
 #################################SCRIPT_START##################################
 
-set -x
-
+. "${script_dir}/vars"
 if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
 obtain_sudo_password
-import_vars
 
-set +u
 ar18_deployment_target="${1}"
-if [ "${ar18_deployment_target}" = "" ]; then
-  ar18_deployment_target="$(cat "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target")"
-  . "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
-else
-  . "${script_dir}/config/${ar18_deployment_target}"
-fi
-set -u
 
-export user_name="${user_name}"
-export install_dir="${install_dir}"
+ar18_install "${install_dir}" "${module_name}" "${script_dir}"
 
-echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
-
-mkdir "${script_dir}/temp"
-cd "${script_dir}/temp"
-
-for module in "${modules[@]}"; do
-  #git clone \
-  #  --depth 1  \
-  #  --filter=blob:none  \
-  #  --sparse \
-  #  "https://github.com/ar18-linux/${module}" \
-  #;
-  #cd "${module}"
-  #git sparse-checkout set "${module}"
-  git clone "https://github.com/ar18-linux/${module}.git"
-  if [ -f "${module}/install.sh" ]; then
-    echo "${ar18_sudo_password}" | sudo -Sk chmod +x "${module}/install.sh"
-    "${module}/install.sh"
-  fi
-done
-
-git clone "https://github.com/ar18-linux/xfce_desktop_deployment.git"
-echo "${ar18_sudo_password}" | sudo -Sk chmod +x xfce_desktop_deployment/install.sh
-
-xfce_desktop_deployment/xfce_desktop_deployment/install.sh "${ar18_deployment_target}"
+echo "${ar18_sudo_password}" | sudo -Sk rm -f "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target"
+echo "${ar18_deployment_target}" > "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
