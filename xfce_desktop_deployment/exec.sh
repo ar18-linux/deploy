@@ -52,6 +52,9 @@ export install_dir="${install_dir}"
 
 echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
+# Upgrade system
+echo "${ar18_sudo_password}" | sudo -S -k pacman -Syu --noconfirm
+
 mkdir "${script_dir}/temp"
 cd "${script_dir}/temp"
 
