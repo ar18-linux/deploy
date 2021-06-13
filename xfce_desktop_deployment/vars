@@ -16,6 +16,7 @@ modules=(
   disable_lid_button
   emulate_right_click_touchscreen
   event_hooks
+  install_software
 )
 
 # Modules that will be installed as dependencies:
