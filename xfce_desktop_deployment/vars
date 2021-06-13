@@ -18,6 +18,7 @@ modules=(
   event_hooks
   #install_software
   kill_focussed_window
+  zsh_config
 )
 
 # Modules that will be installed as dependencies:
