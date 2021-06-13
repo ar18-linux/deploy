@@ -40,10 +40,25 @@ import_vars
 set +u
 ar18_deployment_target="${1}"
 if [ "${ar18_deployment_target}" = "" ]; then
-  ar18_deployment_target="$(cat "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target")"
-  . "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
+  if [ ! -f "$(cat "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target")" ]; then
+    read -p "[ERROR]: Cannot read file to determine installed_target"
+    exit 1
+  else
+    ar18_deployment_target="$(cat "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target")"
+    if [ ! -f "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}" ]; then
+      read -p "[ERROR]: Cannot read configuration file for [${ar18_deployment_target}]"
+      exit 1
+    else
+      . "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
+    fi
+  fi
 else
-  . "${script_dir}/config/${ar18_deployment_target}"
+  if [ ! -f "${script_dir}/config/${ar18_deployment_target}" ]; then
+    read -p "[ERROR]: Cannot read configuration file for [${ar18_deployment_target}]"
+    exit 1
+  else
+    . "${script_dir}/config/${ar18_deployment_target}"
+  fi
 fi
 set -u
 
