@@ -40,7 +40,7 @@ if [ "${is_init}" = "1" ]; then
   . "${script_dir}/config/vars"
 else
   module_name="$(basename "$(echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )")")"
-  [ ! -f "/home/$(logname)/.config/ar18/${module_name}/vars" ] && . "${script_dir}/vars" || . "/home/$(logname)/.config/ar18/${module_name}/vars"  
+  [ ! -f "/home/$(logname)/.config/ar18/${module_name}/vars" ] && . "${script_dir}/config/vars" || . "/home/$(logname)/.config/ar18/${module_name}/vars"  
 fi
 
 if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
