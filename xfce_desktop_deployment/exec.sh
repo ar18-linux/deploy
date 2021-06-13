@@ -45,11 +45,11 @@ if [ "${ar18_deployment_target}" = "" ]; then
     exit 1
   else
     ar18_deployment_target="$(cat "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target")"
-    if [ ! -f "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}" ]; then
+    if [ ! -f "/home/$(logname)/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}" ]; then
       read -p "[ERROR]: Cannot read configuration file for [${ar18_deployment_target}]"
       exit 1
     else
-      . "/home/${user_name}/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
+      . "/home/$(logname)/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
     fi
   fi
 else
