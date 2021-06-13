@@ -19,6 +19,7 @@ modules=(
   #install_software
   kill_focussed_window
   zsh_config
+  psql_control
 )
 
 # Modules that will be installed as dependencies:
