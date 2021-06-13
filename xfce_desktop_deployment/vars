@@ -8,17 +8,17 @@ user_name="nulysses"
 
 # These modules will be installed
 modules=(
-  ar18_update # Update script
-  autostarts
-  bluetooth_headset_as_presenter
-  cf-19_calibrate_touchscreen
-  disable_lid_wake
-  disable_lid_button
-  emulate_right_click_touchscreen
-  event_hooks
+  #ar18_update # Update script
+  #autostarts
+  #bluetooth_headset_as_presenter
+  #cf-19_calibrate_touchscreen
+  #disable_lid_wake
+  #disable_lid_button
+  #emulate_right_click_touchscreen
+  #event_hooks
   #install_software
-  kill_focussed_window
-  zsh_config
+  #kill_focussed_window
+  #zsh_config
   psql_control
 )
 
