@@ -27,6 +27,8 @@ modules=(
   suspend
   xfce_display_off
   xfce_keyboard_shortcuts
+  folder_watcher
+  install_virtualbox
 )
 
 # Modules that will be installed as dependencies:
