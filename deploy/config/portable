@@ -36,3 +36,15 @@ modules=(
 #   libstderred
 #   zsh_ar18_lib
 #   GitBSLR
+
+#https://wiki.archlinux.de/title/Statische_IP
+declare -Ag network_interfaces 
+network_interfaces=( \
+  enp0s25="192.168.178.3"
+  wlp9s0=192.168.178.103
+)
+
+declare -Ag services
+services=(
+  atd=enable
+)
