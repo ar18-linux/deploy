@@ -29,6 +29,7 @@ modules=(
   xfce_keyboard_shortcuts
   folder_watcher
   install_virtualbox
+  migrate_system
 )
 
 # Modules that will be installed as dependencies:
