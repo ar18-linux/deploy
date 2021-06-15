@@ -89,10 +89,10 @@ for module in "${modules[@]}"; do
   fi
 done
 
-git clone "https://github.com/ar18-linux/xfce_desktop_deployment.git"
-echo "${ar18_sudo_password}" | sudo -Sk chmod +x xfce_desktop_deployment/install.sh
+git clone "https://github.com/ar18-linux/deploy.git"
+echo "${ar18_sudo_password}" | sudo -Sk chmod +x deploy/install.sh
 
-xfce_desktop_deployment/install.sh "${ar18_deployment_target}"
+deploy/install.sh "${ar18_deployment_target}"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
