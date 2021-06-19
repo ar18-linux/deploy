@@ -30,24 +30,29 @@ IFS=$'\n' shell_options=($(shopt -op))
 set -o pipefail
 set -eu
 #################################SCRIPT_START##################################
-
+if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
+d="$(source_or_execute_config "source" "deploy" "")"
+echo $d
+exit
 set -x
 
 if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"; cd /tmp; git clone https://github.com/ar18-linux/helper_functions.git; mv "/tmp/helper_functions" "/tmp/helper_functions_$(whoami)"; . "/tmp/helper_functions_$(whoami)/helper_functions/helper_functions.sh"; cd "${script_dir}"; export ar18_helper_functions=1; fi
 obtain_sudo_password
 import_vars
 
-source_or_execute_config "source" "deploy" "${1}"
+export ar18_deployment_target="${1}"
+
+source_or_execute_config "source" "deploy" "${ar18_deployment_target}"
 
 export user_name="${user_name}"
 export install_dir="${install_dir}"
 
 "${script_dir}/../deploy/install.sh" "${ar18_deployment_target}"
-
-echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
-
 # Upgrade system
 echo "${ar18_sudo_password}" | sudo -S -k pacman -Syu --noconfirm
+
+
+echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
 mkdir "${script_dir}/temp"
 cd "${script_dir}/temp"
