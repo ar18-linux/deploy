@@ -44,7 +44,7 @@ source_or_execute_config "source" "deploy" "${ar18_deployment_target}"
 export user_name="${user_name}"
 export install_dir="${install_dir}"
 
-"${script_dir}/../deploy/install.sh" "${ar18_deployment_target}"
+"${script_dir}/../install.sh" "${ar18_deployment_target}"
 # Upgrade system
 echo "${ar18_sudo_password}" | sudo -S -k pacman -Syu --noconfirm
 
