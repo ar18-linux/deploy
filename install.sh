@@ -40,9 +40,9 @@ ar18_deployment_target="${1}"
 
 ar18_install "${install_dir}" "${module_name}" "${script_dir}"
 
-echo "${ar18_sudo_password}" | sudo -Sk rm -f "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target"
-mkdir -p "/home/${user_name}/.config/ar18/xfce_desktop_deployment"
-echo "${ar18_deployment_target}" > "/home/${user_name}/.config/ar18/xfce_desktop_deployment/installed_target"
+echo "${ar18_sudo_password}" | sudo -Sk rm -f "/home/${user_name}/.config/ar18/deploy/installed_target"
+mkdir -p "/home/${user_name}/.config/ar18/deploy"
+echo "${ar18_deployment_target}" > "/home/${user_name}/.config/ar18/deploy/installed_target"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values

@@ -37,30 +37,7 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-set +u
-ar18_deployment_target="${1}"
-if [ "${ar18_deployment_target}" = "" ]; then
-  if [ ! -f "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target" ]; then
-    read -p "[ERROR]: Cannot read file to determine installed_target"
-    exit 1
-  else
-    ar18_deployment_target="$(cat "/home/$(logname)/.config/ar18/xfce_desktop_deployment/installed_target")"
-    if [ ! -f "/home/$(logname)/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}" ]; then
-      read -p "[ERROR]: Cannot read configuration file for [${ar18_deployment_target}]"
-      exit 1
-    else
-      . "/home/$(logname)/.config/ar18/xfce_desktop_deployment/${ar18_deployment_target}"
-    fi
-  fi
-else
-  if [ ! -f "${script_dir}/config/${ar18_deployment_target}" ]; then
-    read -p "[ERROR]: Cannot read configuration file for [${ar18_deployment_target}]"
-    exit 1
-  else
-    . "${script_dir}/config/${ar18_deployment_target}"
-  fi
-fi
-set -u
+source_or_execute_config "source" "deploy" "${1}"
 
 export user_name="${user_name}"
 export install_dir="${install_dir}"
