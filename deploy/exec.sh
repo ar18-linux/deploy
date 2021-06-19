@@ -37,7 +37,9 @@ if [ ! -v ar18_helper_functions ]; then rm -rf "/tmp/helper_functions_$(whoami)"
 obtain_sudo_password
 import_vars
 
-export ar18_deployment_target="${1}"
+set +u
+export ar18_deployment_target="$(read_target "${1}")"
+set -u
 
 source_or_execute_config "source" "deploy" "${ar18_deployment_target}"
 
