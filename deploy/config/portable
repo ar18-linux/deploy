@@ -6,6 +6,7 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
+  power_options
   ar18_update # Update script
   autostarts
   bluetooth_headset_as_presenter

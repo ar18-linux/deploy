@@ -65,6 +65,8 @@ set -u
 export user_name="${user_name}"
 export install_dir="${install_dir}"
 
+"${script_dir}/../deploy/install.sh" "${ar18_deployment_target}"
+
 echo "${ar18_sudo_password}" | sudo -Sk rm -rf "${script_dir}/temp"
 
 # Upgrade system
@@ -88,11 +90,6 @@ for module in "${modules[@]}"; do
     "${module}/install.sh"
   fi
 done
-
-git clone "https://github.com/ar18-linux/deploy.git"
-echo "${ar18_sudo_password}" | sudo -Sk chmod +x deploy/install.sh
-
-deploy/install.sh "${ar18_deployment_target}"
 
 ##################################SCRIPT_END###################################
 # Restore old shell values
