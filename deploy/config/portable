@@ -34,6 +34,7 @@ modules=(
   migrate_system
   helper_functions
   mac_change
+  setup_dropbear
 )
 
 # Modules that will be installed as dependencies:
