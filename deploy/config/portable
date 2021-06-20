@@ -32,6 +32,7 @@ modules=(
   install_virtualbox
   refresh_xfce
   migrate_system
+  mac_change
 )
 
 # Modules that will be installed as dependencies:
