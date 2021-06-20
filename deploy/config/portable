@@ -32,6 +32,7 @@ modules=(
   install_virtualbox
   refresh_xfce
   migrate_system
+  helper_functions
   mac_change
 )
 
