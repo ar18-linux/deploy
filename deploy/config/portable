@@ -35,6 +35,7 @@ modules=(
   helper_functions
   mac_change
   setup_dropbear
+  create_boot_medium
 )
 
 # Modules that will be installed as dependencies:
