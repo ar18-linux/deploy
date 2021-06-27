@@ -36,6 +36,7 @@ modules=(
   mac_change
   setup_dropbear
   create_boot_medium
+  gpg
 )
 
 # Modules that will be installed as dependencies:
