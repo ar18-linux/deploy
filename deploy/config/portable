@@ -34,7 +34,7 @@ modules=(
   migrate_system
   helper_functions
   mac_change
-  setup_dropbear
+  #setup_dropbear
   create_boot_medium
   gpg
 )
