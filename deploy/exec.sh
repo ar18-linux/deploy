@@ -39,6 +39,7 @@ import_vars
 
 
 
+
 set +u
 export ar18_deployment_target="$(read_target "${1}")"
 set -u
