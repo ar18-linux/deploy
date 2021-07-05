@@ -47,7 +47,7 @@ modules=(
 
 #https://wiki.archlinux.de/title/Statische_IP
 declare -Ag network_interfaces 
-network_interfaces=( \
+network_interfaces=(
   enp0s25="192.168.178.3"
   wlp9s0=192.168.178.103
 )
