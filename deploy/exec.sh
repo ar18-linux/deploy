@@ -76,7 +76,7 @@ ar18.script.execute_with_sudo pacman -Syu --noconfirm
 temp_dir="/tmp/deploy"
 ar18.script.execute_with_sudo rm -rf "${temp_dir}"
 
-mkdir "${temp_dir}"
+mkdir -p "${temp_dir}"
 cd "${temp_dir}"
 
 for module in "${modules[@]}"; do
