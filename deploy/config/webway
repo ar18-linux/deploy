@@ -11,7 +11,7 @@ modules=(
   zsh_config
   setup_ssh_server
   setup_dropbear
-  #setup_fail2ban
+  setup_fail2ban
   create_boot_medium
   gpg
   setup_wifi_connections
