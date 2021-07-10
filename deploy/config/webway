@@ -6,35 +6,12 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
-  power_options
   ar18_update # Update script
-  autostarts
-  bluetooth_headset_as_presenter
-  cf-19_calibrate_touchscreen
-  disable_lid_wake
-  disable_lid_button
-  emulate_right_click_touchscreen
-  event_hooks
   install_software
-  kill_focussed_window
   zsh_config
-  psql_control
-  rclone_sync
-  screen_scale
-  script_template
-  set_headphone_volume_level_to_max
   setup_ssh_server
-  setup_tigervnc
-  suspend
-  xfce_display_off
-  xfce_keyboard_shortcuts
-  folder_watcher
-  install_virtualbox
-  refresh_xfce
-  migrate_system
-  helper_functions
-  mac_change
   setup_dropbear
+  #setup_fail2ban
   create_boot_medium
   gpg
   setup_wifi_connections
@@ -48,11 +25,8 @@ modules=(
 #https://wiki.archlinux.de/title/Statische_IP
 declare -Ag network_interfaces 
 network_interfaces=(
-  enp0s25="192.168.178.3"
-  wlp9s0=192.168.178.103
 )
 
 declare -Ag services
 services=(
-  atd=enable
 )
