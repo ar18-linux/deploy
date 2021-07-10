@@ -6,16 +6,16 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
+  setup_ssh_server
+  setup_port_forwarding
   ar18_update # Update script
   install_software
   zsh_config
-  setup_ssh_server
   #setup_dropbear
   setup_fail2ban
   create_boot_medium
   gpg
   setup_wifi_connections
-  setup_port_forwarding
 )
 
 # Modules that will be installed as dependencies:
