@@ -100,6 +100,8 @@ for module in "${modules[@]}"; do
   fi
 done
 
+ar18.script.execute_with_sudo systemctl set-default "${ar18_run_level}"
+
 ##################################SCRIPT_END###################################
 # Restore environment
 {

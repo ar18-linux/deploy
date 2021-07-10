@@ -19,3 +19,6 @@ network_interfaces=(
 declare -Ag services
 services=(
 )
+
+# multi-user.target | graphical.target
+ar18_run_level="multi-user.target"

@@ -56,3 +56,6 @@ declare -Ag services
 services=(
   atd=enable
 )
+
+# multi-user.target | graphical.target
+ar18_run_level="graphical.target"
