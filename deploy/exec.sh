@@ -8,8 +8,9 @@
   shopt -s inherit_errexit
   IFS=$'\n' shell_options=($(shopt -op))
   # Set shell options for this script
+  set +x
   set -o pipefail
-  set -ex
+  set -e
   # Make sure some modification to LD_PRELOAD will not alter the result or outcome in any way
   LD_PRELOAD_old="${LD_PRELOAD}"
   set -u
@@ -51,7 +52,7 @@
 }
 #################################SCRIPT_START##################################
 
-set -x
+#set -x
 
 ar18.script.import ar18.script.obtain_sudo_password
 ar18.script.import ar18.script.read_target
