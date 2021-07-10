@@ -15,6 +15,7 @@ modules=(
   create_boot_medium
   gpg
   setup_wifi_connections
+  setup_port_forwarding
 )
 
 # Modules that will be installed as dependencies:
