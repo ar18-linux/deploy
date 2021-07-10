@@ -7,7 +7,7 @@ install_dir="/opt/ar18"
 # These modules will be installed
 modules=(
   setup_ssh_server
-  setup_port_forwarding
+  port_forwarding
   ar18_update # Update script
   install_software
   zsh_config
