@@ -11,7 +11,7 @@ modules=(
   ar18_update # Update script
   install_software
   zsh_config
-  #setup_dropbear
+  setup_dropbear
   setup_fail2ban
   create_boot_medium
   gpg
