@@ -52,7 +52,7 @@
 }
 #################################SCRIPT_START##################################
 
-#set -x
+set -x
 
 ar18.script.import ar18.script.obtain_sudo_password
 ar18.script.import ar18.script.read_target
