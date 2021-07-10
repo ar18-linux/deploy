@@ -60,9 +60,11 @@ ar18.script.import ar18.script.read_target
 ar18.script.import ar18.script.import_vars
 ar18.script.import ar18.script.execute_with_sudo
 ar18.script.import ar18.script.source_or_execute_config
+ar18.script.import ar18.script.version_check
+
+ar18.script.version_check
 
 ar18.script.obtain_sudo_password
-ar18.script.import_vars
 
 set +u
 export ar18_deployment_target="$(ar18.script.read_target "${1}")"
