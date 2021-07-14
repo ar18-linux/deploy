@@ -6,6 +6,7 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
+  setup_wifi_connections
   install_software
   zsh_config
   setup_ssh_server
