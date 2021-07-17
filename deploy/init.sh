@@ -191,6 +191,10 @@ ar18.script.version_check
 
 ar18.script.obtain_sudo_password
 
+ar18.script.execute_with_sudo systemctl enable systemd-timesyncd
+ar18.script.execute_with_sudo systemctl start systemd-timesyncd
+
+
 set +u
 export ar18_deployment_target="$(ar18.script.read_target "${1}")"
 set -u
