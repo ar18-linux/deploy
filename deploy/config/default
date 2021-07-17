@@ -13,7 +13,8 @@ modules=(
 #   zsh_ar18_lib
 #   GitBSLR
 
-#https://wiki.archlinux.de/title/Statische_IP
+# For changing MAC addresses
+# https://wiki.archlinux.de/title/Statische_IP
 declare -Ag network_interfaces 
 network_interfaces=(
 )

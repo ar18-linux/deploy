@@ -7,12 +7,16 @@ install_dir="/opt/ar18"
 # These modules will be installed
 modules=(
   setup_wifi_connections
+  simple_mail
   install_software
   zsh_config
   setup_ssh_server
+  setup_dropbear
+  create_boot_medium
 )
 
-#https://wiki.archlinux.de/title/Statische_IP
+# For changing MAC addresses
+# https://wiki.archlinux.de/title/Statische_IP
 declare -Ag network_interfaces 
 network_interfaces=(
 )
