@@ -14,6 +14,8 @@ modules=(
   setup_dropbear
   setup_fail2ban
   create_boot_medium
+  nginx
+  certificate
   gpg
   setup_wifi_connections
   simple_mail
