@@ -16,6 +16,7 @@ modules=(
   create_boot_medium
   gpg
   setup_wifi_connections
+  simple_mail
 )
 
 # Modules that will be installed as dependencies:
