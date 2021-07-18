@@ -14,6 +14,7 @@ modules=(
   setup_ssh_server
   setup_dropbear
   create_boot_medium
+  commandbox
 )
 
 # For changing MAC addresses
