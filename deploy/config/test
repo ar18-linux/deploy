@@ -6,6 +6,7 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
+  ar18_update
   power_options
   setup_wifi_connections
   simple_mail
