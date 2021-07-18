@@ -180,6 +180,12 @@ trap 'err_report "${BASH_SOURCE[0]}" ${LINENO} "${BASH_COMMAND}"' ERR
 }
 #################################SCRIPT_START##################################
 
+temp_dir="/tmp/deploy"
+
+function ar18_extra_cleanup(){
+  ar18.script.execute_with_sudo rm -rf "${temp_dir}"
+}
+
 ar18.script.import ar18.script.obtain_sudo_password
 ar18.script.import ar18.script.read_target
 ar18.script.import ar18.script.import_vars
@@ -209,7 +215,6 @@ ar18.script.execute_with_sudo chmod +x "${script_dir}/../install.sh"
 # Upgrade system
 ar18.script.execute_with_sudo pacman -Syu --noconfirm
 
-temp_dir="/tmp/deploy"
 ar18.script.execute_with_sudo rm -rf "${temp_dir}"
 
 mkdir -p "${temp_dir}"

@@ -6,6 +6,17 @@ install_dir="/opt/ar18"
 
 # These modules will be installed
 modules=(
+  # Base modules
+  ar18_update
+  power_options
+  setup_wifi_connections
+  simple_mail
+  install_software
+  zsh_config
+  setup_ssh_server
+  setup_dropbear
+  create_boot_medium
+  commandbox
 )
 
 # Modules that will be installed as dependencies:
