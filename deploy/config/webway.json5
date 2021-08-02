@@ -1,0 +1,18 @@
+{
+  "deploy": {
+    "test": {
+      "install_dir": "",
+      "install_date": ""
+    },
+    "webway": {
+      
+    }
+  },
+  "setup_wifi_connections": [
+    "test",
+    "webway"
+  ],
+  "psql_control": [
+    "office"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  /* Some files will be installed to the user's home directory. */
+  "user_name": "nulysses",
+  /* The bulk of the files goes here. */
+  "install_dir": "/opt/ar18",
+  /* These modules will be installed. */
+  "modules": [
+  ],
+  /* For changing MAC addresses. */
+  "network_interfaces": {
+
+  },
+  /* Services to enable and start. */
+  "services": [
+    "systemd-timesyncd", /* Fetch current time from server. */
+  ],
+  /* What run level the machine will boot into.
+     multi-user.target | graphical.target */
+  "run_level": "multi-user.target"
+}

@@ -1,8 +1,11 @@
-module_name="deploy"
+module_name = "deploy"
 
-if [ ! -v user_name ]; then
-  user_name="$(whoami)"
-fi
-if [ ! -v ar18_install_dir ]; then
-  install_dir="/opt/ar18"
-fi
+try:
+  user_name
+except Exception:
+  user_name = $(whoami).strip()
+  
+try:
+  install_dir
+except Exception:
+  install_dir = "/opt/ar18"
