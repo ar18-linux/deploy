@@ -1,5 +1,5 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-02_23:36:43
+# ar18 Script version 2021-08-02_23:58:55
 # Script template version 2021-08-02_23:36:15
 
 if not "AR18_PARENT_PROCESS" in {...}:
@@ -31,6 +31,10 @@ if not "AR18_PARENT_PROCESS" in {...}:
     
   def ar18_log_exit():
     print(f"[~] {get_script_path()}")
+    
+    
+  def module_name():
+    return os.path.basename(script_dir())
   
   
   def get_user_name():
@@ -94,8 +98,9 @@ else:
   ar18.log.entry()
 #################################SCRIPT_START##################################
 
+#config_dir = script_dir() + "/config"
+config_dir = ar18.script.get_config_dir(script_dir(), module_name())
 ar18.script.include("script.validate_targets")
-config_dir = script_dir() + "/config"
 ar18.script.validate_targets(config_dir, sys.argv[1:])
 
 temp_dir = "/tmp/deploy"
