@@ -1,6 +1,6 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-02_23:24:41
-# Script template version 2021-08-02_23:23:49
+# ar18 Script version 2021-08-02_23:36:43
+# Script template version 2021-08-02_23:36:15
 
 if not "AR18_PARENT_PROCESS" in {...}:
   import os
@@ -23,6 +23,14 @@ if not "AR18_PARENT_PROCESS" in {...}:
     if os.getpid() == $AR18_PARENT_PROCESS:
       rm -rf @($AR18_TEMP_DIR)
     print("on_exit")
+    
+    
+  def ar18_log_entry():
+    print(f"[*] {get_script_path()}")
+    
+    
+  def ar18_log_exit():
+    print(f"[~] {get_script_path()}")
   
   
   def get_user_name():
@@ -78,12 +86,12 @@ if not "AR18_PARENT_PROCESS" in {...}:
           os.path.dirname(file_path)
         )
       source @(file_path)
-      print(45)
-  
   
   get_user_name()
   get_parent_process()
   import_include()
+else:
+  ar18.log.entry()
 #################################SCRIPT_START##################################
 
 ar18.script.include("script.validate_targets")
