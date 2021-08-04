@@ -1,3 +1,4 @@
+/* Not a template, but the structure containing information about currently installed modules. */
 {
   "deploy": {
     "test": {

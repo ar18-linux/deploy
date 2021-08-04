@@ -1,11 +1,13 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-02_23:58:55
-# Script template version 2021-08-02_23:36:15
+# ar18 Script version 2021-08-04_22:57:42
+# Script template version 2021-08-03_00:24:44
 
-if not "AR18_PARENT_PROCESS" in {...}:
+if not "AR18_PARENT_PROCESS" in ${...}:
   import os
   import getpass
   import sys
+  import colorama
+  import inspect
   
   $AR18_LIB_XONSH = "ar18_lib_xonsh"
   
@@ -16,21 +18,14 @@ if not "AR18_PARENT_PROCESS" in {...}:
   # eval does not work in xonsh, source-bash eval must be used instead. 
   # Without this directive, there will be warnings about bash aliases.
   $FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
-  
-  
-  @events.on_exit
-  def test():
-    if os.getpid() == $AR18_PARENT_PROCESS:
-      rm -rf @($AR18_TEMP_DIR)
-    print("on_exit")
     
     
   def ar18_log_entry():
-    print(f"[*] {get_script_path()}")
-    
+    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[*]{colorama.Style.RESET_ALL} {script_path(2)}")
+
     
   def ar18_log_exit():
-    print(f"[~] {get_script_path()}")
+    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[~]{colorama.Style.RESET_ALL} {script_path(2)}")
     
     
   def module_name():
@@ -38,23 +33,24 @@ if not "AR18_PARENT_PROCESS" in {...}:
   
   
   def get_user_name():
-    if "AR18_USER_NAME" not in {...}:
+    if "AR18_USER_NAME" not in ${...}:
       $AR18_USER_NAME = getpass.getuser()
   
   
   def get_parent_process():
-    if "AR18_PARENT_PROCESS" not in {...}:
+    if "AR18_PARENT_PROCESS" not in ${...}:
       $AR18_PARENT_PROCESS = os.getpid()
+      $AR18_PARENT_SCRIPT = script_path(2)
       $AR18_TEMP_DIR = f"/tmp/xonsh/{$AR18_PARENT_PROCESS}"
       mkdir -p @($AR18_TEMP_DIR)
   
   
-  def script_dir():
-    return os.path.dirname(os.path.realpath(__file__))
+  def script_dir(frame_offset:int=1):
+    return os.path.dirname(os.path.realpath(inspect.stack()[frame_offset].filename))
   
   
-  def script_path():
-    return os.path.realpath(__file__)
+  def script_path(frame_offset:int=1):
+    return os.path.realpath(inspect.stack()[frame_offset].filename)
   
   
   def get_environment():
@@ -65,7 +61,7 @@ if not "AR18_PARENT_PROCESS" in {...}:
     old_cwd = os.getcwd()
     mkdir -p @(dest_dir)
     cd @(dest_dir)
-    curl -f -O @(url)
+    curl -f -O @(url) > /dev/null 2>&1
     cd @(old_cwd)
     
   
@@ -77,9 +73,9 @@ if not "AR18_PARENT_PROCESS" in {...}:
       # If it cannot be found, fetch it from github.com.
       install_dir_path = f"/home/{$AR18_USER_NAME}/.config/ar18/{$AR18_LIB_XONSH}/INSTALL_DIR"
       if os.path.exists(install_dir_path):
-        file_path = open(install_dir_path).read()
+        file_path = open(install_dir_path).read().strip()
         if os.path.exists(file_path):
-          file_path = f"{file_path}/{$AR18_LIB_XONSH}/ar18/script/include.xsh"
+          file_path = f"{file_path}/{$AR18_LIB_XONSH}/{$AR18_LIB_XONSH}/ar18/script/include.xsh"
       else:
         file_path = f"{$AR18_TEMP_DIR}/{$AR18_LIB_XONSH}/ar18/script/include.xsh"
         mkdir -p @(os.path.dirname(file_path))
@@ -94,54 +90,63 @@ if not "AR18_PARENT_PROCESS" in {...}:
   get_user_name()
   get_parent_process()
   import_include()
-else:
-  ar18.log.entry()
+
+ar18.log.entry()
+
+def temp_func(**kwargs):
 #################################SCRIPT_START##################################
-
-#config_dir = script_dir() + "/config"
-config_dir = ar18.script.get_config_dir(script_dir(), module_name())
-ar18.script.include("script.validate_targets")
-ar18.script.validate_targets(config_dir, sys.argv[1:])
-
-temp_dir = "/tmp/deploy"
-
-@events.on_exit
-def ar18_extra_cleanup():
-  print("cleanup 2")
-  #ar18.sudo.exec("rm", "-rf", temp_dir)
-
-
-ar18.script.include("sudo.ask_pass")
-ar18.script.include("script.read_targets")
-#ar18.script.include("ar18.script.import_vars")
-ar18.script.include("sudo.exec_as")
-#ar18.script.include("ar18.script.source_or_execute_config")
-#ar18.script.include("ar18.script.version_check")
-
-#ar18.sudo.ask_pass()
+  ar18.script.include("script.get_config_dir")
+  config_dir = ar18.script.get_config_dir(script_dir(), module_name())
+  ar18.script.include("log.info")
+  ar18.script.include("log.debug")
+  ar18.script.include("log.fatal")
+  ar18.script.include("log.error")
+  ar18.log.info(config_dir)
+  ar18.script.include("script.validate_targets")
+  ar18.script.validate_targets(config_dir, sys.argv[1:], True)
   
-old_targets = ar18.script.read_targets()
-# Remove old installations.
-# Todo
-for key,target in old_targets.items():
-  print(key,target)
+  temp_dir = "/tmp/deploy"
   
-print("sds")
-targets = Ar18.Struct()
-for arg in sys.argv[1:]:
-  targets[arg] = Ar18.Struct(config_dir + "/" + arg + ".json5")
-  print(arg)
-print(len(targets))
-assert len({k: v for k, v in targets.items() if v.user_name == targets.index(0).user_name}) == len(targets), "All selected targets must have the same user name."
-assert len({k: v for k, v in targets.items() if v.install_dir == targets.index(0).install_dir}) == len(targets), "All selected targets must have the same install dir."
-assert len({k: v for k, v in targets.items() if v.run_level == targets.index(0).run_level}) == len(targets), "All selected targets must have the same run level."
   
-$TARGET_USER_NAME = targets.index(0).user_name
-$TARGET_INSTALL_DIR = targets.index(0).install_dir
+  ar18.script.include("sudo.ask_pass")
+  ar18.script.include("script.read_targets")
+  #ar18.script.include("ar18.script.import_vars")
+  ar18.script.include("sudo.exec_as")
+  #ar18.script.include("ar18.script.source_or_execute_config")
+  #ar18.script.include("ar18.script.version_check")
+    
+  old_targets = ar18.script.read_targets()
+  # Remove old installations.
+  # Todo
+  for key,target in old_targets.items():
+    print(key,target)
+    
+  print("sds")
+  targets = Ar18.Struct()
+  for arg in sys.argv[1:]:
+    targets[arg] = Ar18.Struct(config_dir + "/" + arg + ".json5")
+    print(arg)
+  print(len(targets))
+  ar18.script.include("script.check")
+  ar18.script.check(len({k: v for k, v in targets.items() if v.user_name == targets.index(0).user_name}) == len(targets),
+    "All selected targets must have the same user name.")
+  ar18.script.check(len({k: v for k, v in targets.items() if v.install_dir == targets.index(0).install_dir}) == len(targets),
+    "All selected targets must have the same install dir.")
+  ar18.script.check(len({k: v for k, v in targets.items() if v.run_level == targets.index(0).run_level}) == len(targets), 
+    "All selected targets must have the same run level.") 
+    
+  $TARGET_USER_NAME = targets.index(0).user_name
+  $TARGET_INSTALL_DIR = targets.index(0).install_dir
   
-ar18.sudo.exec_as(f"chmod +x {script_dir}/../install.xsh")
-@(script_dir)/../install.xsh
+  ar18.sudo.ask_pass()
+  ar18.sudo.exec_as(f"chmod +x {script_dir()}/../install.xsh")
+  ar18.log.debug(script_dir())
+  source @(script_dir())/../install.xsh
+  ar18.system.deploy.install()
   
+  #installed_ta
+
+
 
 """
 ar18.script.version_check "${@}"
@@ -176,6 +181,21 @@ done
 ar18.script.execute_with_sudo systemctl set-default "${ar18_run_level}"
 """
 
-##################################SCRIPT_END###################################
+@events.on_exit
+def ar18_extra_cleanup():
+  print("cleanup 2")
+  #ar18.sudo.exec("rm", "-rf", temp_dir)
 
-#end
+##################################SCRIPT_END###################################
+ar18.system[os.path.basename(script_dir())][os.path.basename(script_path())[:-4]] = temp_func
+if __name__ == "__main__":
+  ar18.system[os.path.basename(script_dir())][os.path.basename(script_path())[:-4]]()
+  
+  
+@events.on_exit
+def on_exit():
+  if os.getpid() == $AR18_PARENT_PROCESS and script_path() == $AR18_PARENT_SCRIPT:
+    print("cleanup1")
+    rm -rf @($AR18_TEMP_DIR)
+  print("on_exit")
+  ar18.log.exit()
