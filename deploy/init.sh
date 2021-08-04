@@ -3,7 +3,7 @@
 
 # Prepare script environment
 {
-  # Script template version 2021-08-03_00:24:44
+  # Script template version 2021-08-05_01:15:23
   script_dir_temp="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
   script_path_temp="${script_dir_temp}/$(basename "${BASH_SOURCE[0]}")"
   echo "*${script_path_temp}"

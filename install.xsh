@@ -1,6 +1,6 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-04_22:57:42
-# Script template version 2021-08-03_00:24:44
+# ar18 Script version 2021-08-05_01:15:47
+# Script template version 2021-08-05_01:15:23
 
 if not "AR18_PARENT_PROCESS" in ${...}:
   import os
@@ -21,15 +21,24 @@ if not "AR18_PARENT_PROCESS" in ${...}:
     
     
   def ar18_log_entry():
-    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[*]{colorama.Style.RESET_ALL} {script_path(2)}")
+    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[*] {log_header()}{colorama.Style.RESET_ALL}")
 
     
   def ar18_log_exit():
-    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[~]{colorama.Style.RESET_ALL} {script_path(2)}")
+    print(f"{colorama.Back.WHITE}{colorama.Fore.BLACK}[~] {log_header()}{colorama.Style.RESET_ALL}")
     
     
-  def module_name():
-    return os.path.basename(script_dir())
+  def subsystem_name():
+    return os.path.basename(script_dir(2))
+  
+  
+  def function_name():
+    return os.path.basename(script_path(2))[:-4]
+    
+    
+  def log_header():
+    c_stack = inspect.stack()[2]
+    return f"{os.path.realpath(c_stack.filename)}: {c_stack.function}():{c_stack.lineno}"
   
   
   def get_user_name():
@@ -55,6 +64,10 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   
   def get_environment():
     pass
+    
+    
+  def is_parent():
+    return (os.getpid() == $AR18_PARENT_PROCESS and script_path(2) == $AR18_PARENT_SCRIPT)
   
   
   def retrieve_file(url, dest_dir):
@@ -91,38 +104,57 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   get_parent_process()
   import_include()
 
-ar18.log.entry()
 
-def temp_func(**kwargs):
+def exec_func(**kwargs):
+  ar18.log.entry()
+  try:
 #################################SCRIPT_START##################################
-  print("ff")
-  ar18.log.debug(script_dir())
-  source @(script_dir())/vars
-  config_dir = script_dir() + f"/{module_name}/config"
     
-  ar18.script.include("script.validate_targets")
-  ar18.script.validate_targets(config_dir, sys.argv[1:])
+    def test():
+      print("djkk")
+    def on_exit2():
+      ar18.log.error("exit!")
+    print("ff")
+    ar18.log.debug(script_dir())
+    source @(script_dir())/vars
+    config_dir = script_dir() + f"/{module_name}/config"
+      
+    ar18.script.include("script.validate_targets")
+    ar18.script.validate_targets(config_dir, sys.argv[1:])
+    
+    ar18.script.include("sudo.ask_pass")
+    ar18.sudo.ask_pass()
+    
+    ar18.script.include("script.uninstall")
+    ar18.script.uninstall(install_dir, module_name, script_dir(), user_name)
+    
+    ar18.script.include("script.install")
+    ar18.script.install(install_dir, module_name, script_dir(), user_name)
+    ar18.log.debug(__name__)
+    test()
   
-  ar18.script.include("sudo.ask_pass")
-  ar18.sudo.ask_pass()
-  
-  ar18.script.include("script.uninstall")
-  ar18.script.uninstall(install_dir, module_name, script_dir(), user_name)
-  
-  ar18.script.include("script.install")
-  ar18.script.install(install_dir, module_name, script_dir(), user_name)
-  
+  except:
+    raise
+  finally:
+    on_exit2()
 
 ##################################SCRIPT_END###################################
-ar18.system[os.path.basename(script_dir())][os.path.basename(script_path())[:-4]] = temp_func
-if __name__ == "__main__":
-  ar18.system[os.path.basename(script_dir())][os.path.basename(script_path())[:-4]]()
+    ar18.system[subsystem_name()][function_name()].exit()
+    
+    
+ar18.system[subsystem_name()][function_name()].run = exec_func
   
   
-@events.on_exit
-def on_exit():
-  if os.getpid() == $AR18_PARENT_PROCESS and script_path() == $AR18_PARENT_SCRIPT:
+def ar18_on_exit_handler():
+  if is_parent():
     print("cleanup1")
     rm -rf @($AR18_TEMP_DIR)
   print("on_exit")
   ar18.log.exit()
+
+
+ar18.system[subsystem_name()][function_name()].exit = ar18_on_exit_handler
+
+if is_parent():
+  ar18.system[subsystem_name()][function_name()].run()
+  
