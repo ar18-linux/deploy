@@ -1,5 +1,5 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-05_01:15:47
+# ar18 Script version 2021-08-05_08:58:42
 # Script template version 2021-08-05_01:15:23
 
 if not "AR18_PARENT_PROCESS" in ${...}:
@@ -8,6 +8,7 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   import sys
   import colorama
   import inspect
+  from datetime import datetime
   
   $AR18_LIB_XONSH = "ar18_lib_xonsh"
   
@@ -18,6 +19,11 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   # eval does not work in xonsh, source-bash eval must be used instead. 
   # Without this directive, there will be warnings about bash aliases.
   $FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
+    
+    
+  def date_time():
+    now = datetime.now()
+    return now.strftime("%Y-%m-%d_%H:%M:%S.%f")
     
     
   def ar18_log_entry():
@@ -124,7 +130,6 @@ def exec_func(**kwargs):
     
     temp_dir = "/tmp/deploy"
     
-    
     ar18.script.include("sudo.ask_pass")
     ar18.script.include("script.read_targets")
     #ar18.script.include("ar18.script.import_vars")
@@ -132,13 +137,6 @@ def exec_func(**kwargs):
     #ar18.script.include("ar18.script.source_or_execute_config")
     #ar18.script.include("ar18.script.version_check")
       
-    old_targets = ar18.script.read_targets()
-    # Remove old installations.
-    # Todo
-    for key,target in old_targets.items():
-      print(key,target)
-      
-    print("sds")
     targets = Ar18.Struct()
     for arg in sys.argv[1:]:
       targets[arg] = Ar18.Struct(config_dir + "/" + arg + ".json5")
@@ -157,28 +155,38 @@ def exec_func(**kwargs):
       "All selected targets must have the same run level.") 
     
     ar18.sudo.ask_pass()
+
+    # Remove old installations.
+    old_targets = ar18.script.read_targets()
+    for key,target in old_targets.items():
+      ar18.sudo.exec_as(f"{target.install_dir}/{key}/uninstall.xsh")
+  
     ar18.sudo.exec_as(f"chmod +x {script_dir()}/../install.xsh")
     ar18.log.debug(script_dir())
     source @(script_dir())/../install.xsh
     
-    ar18.system.deploy.install.run()
-    #installed_ta
+    ar18.system.deploy.install()
 
+    # Upgrade system
+    ar18.sudo.exec_as("pacman -Syu --noconfirm")
 
+    ar18.sudo.exec_as(f"rm -rf {temp_dir}")
+    mkdir -p @(temp_dir)
+    cd @(temp_dir)
+
+    for key,target in targets.items():
+      ar18.log.debug(target)
+      for subsystem in target.subsystems:
+        git clone @(f"https://github.com/ar18-linux/{key}.git")
+        install_path = f"{key}/install.xsh"
+        if os.path.isfile(install_path):
+          ar18.sudo.exec_as(f"chmod +x {key}/install.xsh")
+          @(f"{key}/install.xsh")
+    
+    ar18.sudo.exec_as(f"systemctl set-default {$AR18_RUN_LEVEL}")
 
     """
     ar18.script.version_check "${@}"
-    
-    
-    ar18.script.execute_with_sudo chmod +x "${script_dir}/../install.sh" 
-    "${script_dir}/../install.sh" "${ar18_deployment_target}"
-    # Upgrade system
-    ar18.script.execute_with_sudo pacman -Syu --noconfirm
-    
-    ar18.script.execute_with_sudo rm -rf "${temp_dir}"
-    
-    mkdir -p "${temp_dir}"
-    cd "${temp_dir}"
     
     for module in "${modules[@]}"; do
       #git clone \
@@ -205,10 +213,11 @@ def exec_func(**kwargs):
     ar18_extra_cleanup
 
 ##################################SCRIPT_END###################################
-    ar18.system[subsystem_name()][function_name()].exit()
+    if not is_parent():
+      ar18.system[subsystem_name()][f"{function_name()}_exit"]()
     
     
-ar18.system[subsystem_name()][function_name()].run = exec_func
+ar18.system[subsystem_name()][function_name()] = exec_func
   
   
 def ar18_on_exit_handler():
@@ -219,8 +228,15 @@ def ar18_on_exit_handler():
   ar18.log.exit()
 
 
-ar18.system[subsystem_name()][function_name()].exit = ar18_on_exit_handler
+ar18.system[subsystem_name()][f"{function_name()}_exit"] = ar18_on_exit_handler
 
 if is_parent():
-  ar18.system[subsystem_name()][function_name()].run()
+
+
+  @events.on_exit
+  def ar18_on_exit():
+    ar18_on_exit_handler()
+    
+    
+  ar18.system[subsystem_name()][function_name()]()
   

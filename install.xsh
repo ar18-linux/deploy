@@ -1,5 +1,5 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-05_01:15:47
+# ar18 Script version 2021-08-05_08:58:42
 # Script template version 2021-08-05_01:15:23
 
 if not "AR18_PARENT_PROCESS" in ${...}:
@@ -8,6 +8,7 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   import sys
   import colorama
   import inspect
+  from datetime import datetime
   
   $AR18_LIB_XONSH = "ar18_lib_xonsh"
   
@@ -18,6 +19,11 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   # eval does not work in xonsh, source-bash eval must be used instead. 
   # Without this directive, there will be warnings about bash aliases.
   $FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
+    
+    
+  def date_time():
+    now = datetime.now()
+    return now.strftime("%Y-%m-%d_%H:%M:%S.%f")
     
     
   def ar18_log_entry():
@@ -114,6 +120,8 @@ def exec_func(**kwargs):
       print("djkk")
     def on_exit2():
       ar18.log.error("exit!")
+      ar18.log.error("exit!")
+      ar18.log.error("exit!")
     print("ff")
     ar18.log.debug(script_dir())
     source @(script_dir())/vars
@@ -126,7 +134,7 @@ def exec_func(**kwargs):
     ar18.sudo.ask_pass()
     
     ar18.script.include("script.uninstall")
-    ar18.script.uninstall(install_dir, module_name, script_dir(), user_name)
+    ar18.script.uninstall(subsystem_name(), $AR18_USER_NAME)
     
     ar18.script.include("script.install")
     ar18.script.install(install_dir, module_name, script_dir(), user_name)
@@ -139,13 +147,16 @@ def exec_func(**kwargs):
     on_exit2()
 
 ##################################SCRIPT_END###################################
-    ar18.system[subsystem_name()][function_name()].exit()
+    if not is_parent():
+      ar18.log.debug("efjek")
+      ar18.system[subsystem_name()][f"{function_name()}_exit"]()
     
     
-ar18.system[subsystem_name()][function_name()].run = exec_func
+ar18.system[subsystem_name()][function_name()] = exec_func
   
   
 def ar18_on_exit_handler():
+  ar18.log.debug(inspect.stack()[1].lineno)
   if is_parent():
     print("cleanup1")
     rm -rf @($AR18_TEMP_DIR)
@@ -153,8 +164,17 @@ def ar18_on_exit_handler():
   ar18.log.exit()
 
 
-ar18.system[subsystem_name()][function_name()].exit = ar18_on_exit_handler
+ar18.system[subsystem_name()][f"{function_name()}_exit"] = ar18_on_exit_handler
 
 if is_parent():
-  ar18.system[subsystem_name()][function_name()].run()
+
+
+  @events.on_exit
+  def ar18_on_exit():
+    ar18.log.debug("sd")
+    if is_parent():
+      ar18_on_exit_handler()
+    
+    
+  ar18.system[subsystem_name()][function_name()]()
   

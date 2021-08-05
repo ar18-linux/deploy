@@ -4,7 +4,7 @@
   /* The bulk of the files goes here. */
   "install_dir": "/opt/ar18",
   /* These modules will be installed. */
-  "modules": [
+  "subsystems": [
     "ar18_update",
     "power_options",
     "setup_wifi_connections",

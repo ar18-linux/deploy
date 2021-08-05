@@ -1,13 +1,16 @@
 /* Not a template, but the structure containing information about currently installed modules. */
 {
   "deploy": {
-    "test": {
-      "install_dir": "",
-      "install_date": ""
+    "install_dir": "",
+    "install_date": "",
+    "targets": {
+      "test": {
+      },
+      "webway": {
+
+      }
     },
-    "webway": {
-      
-    }
+    
   },
   "setup_wifi_connections": [
     "test",

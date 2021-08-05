@@ -1,5 +1,5 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-05_01:15:47
+# ar18 Script version 2021-08-05_08:58:42
 # Script template version 2021-08-05_01:15:23
 
 if not "AR18_PARENT_PROCESS" in ${...}:
@@ -8,6 +8,7 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   import sys
   import colorama
   import inspect
+  from datetime import datetime
   
   $AR18_LIB_XONSH = "ar18_lib_xonsh"
   
@@ -18,6 +19,11 @@ if not "AR18_PARENT_PROCESS" in ${...}:
   # eval does not work in xonsh, source-bash eval must be used instead. 
   # Without this directive, there will be warnings about bash aliases.
   $FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
+    
+    
+  def date_time():
+    now = datetime.now()
+    return now.strftime("%Y-%m-%d_%H:%M:%S.%f")
     
     
   def ar18_log_entry():
@@ -109,20 +115,17 @@ def exec_func(**kwargs):
   ar18.log.entry()
   try:
 #################################SCRIPT_START##################################
-
-source @(script_dir())/vars
-
-ar18.script.include("sudo.ask_pass")
-ar18.sudo.ask_pass()
-
-ar18.script.include("script.uninstall")
-ar18.script.uninstall(install_dir, module_name, script_dir(), user_name)
-
+    ar18.script.include("script.uninstall")
+    ar18.script.uninstall(subsystem_name(), $AR18_USER_NAME)
+  except:
+    raise
+  finally:
 ##################################SCRIPT_END###################################
-    ar18.system[subsystem_name()][function_name()].exit()
+    if not is_parent():
+      ar18.system[subsystem_name()][f"{function_name()}_exit"]()
     
     
-ar18.system[subsystem_name()][function_name()].run = exec_func
+ar18.system[subsystem_name()][function_name()] = exec_func
   
   
 def ar18_on_exit_handler():
@@ -133,8 +136,15 @@ def ar18_on_exit_handler():
   ar18.log.exit()
 
 
-ar18.system[subsystem_name()][function_name()].exit = ar18_on_exit_handler
+ar18.system[subsystem_name()][f"{function_name()}_exit"] = ar18_on_exit_handler
 
 if is_parent():
-  ar18.system[subsystem_name()][function_name()].run()
+
+
+  @events.on_exit
+  def ar18_on_exit():
+    ar18_on_exit_handler()
+    
+    
+  ar18.system[subsystem_name()][function_name()]()
   
