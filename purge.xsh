@@ -1,6 +1,6 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-05_08:58:42
-# Script template version 2021-08-05_01:15:23
+# ar18 Script version 2021-08-08_10:09:14
+# Script template version 2021-08-08_09:55:39
 
 if not "AR18_PARENT_PROCESS" in ${...}:
   import os
@@ -120,9 +120,9 @@ def exec_func(**kwargs):
   except:
     raise
   finally:
+
 ##################################SCRIPT_END###################################
-    if not is_parent():
-      ar18.system[subsystem_name()][f"{function_name()}_exit"]()
+    ar18.system[subsystem_name()][f"{function_name()}_exit"]()
     
     
 ar18.system[subsystem_name()][function_name()] = exec_func
@@ -139,12 +139,5 @@ def ar18_on_exit_handler():
 ar18.system[subsystem_name()][f"{function_name()}_exit"] = ar18_on_exit_handler
 
 if is_parent():
-
-
-  @events.on_exit
-  def ar18_on_exit():
-    ar18_on_exit_handler()
-    
-    
   ar18.system[subsystem_name()][function_name()]()
   

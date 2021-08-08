@@ -5,10 +5,11 @@
   "install_dir": "/opt/ar18",
   /* These modules will be installed. */
   "subsystems": [
+    "ar18_update"
   ],
   /* For changing MAC addresses. */
   "network_interfaces": {
-
+    "wlp9s0": "AA:BB:CC:DD:FF:22"
   },
   /* Services to enable and start. */
   "services": [

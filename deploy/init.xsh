@@ -1,6 +1,6 @@
 #! /usr/bin/env xonsh
-# ar18 Script version 2021-08-05_08:58:42
-# Script template version 2021-08-05_01:15:23
+# ar18 Script version 2021-08-08_10:09:14
+# Script template version 2021-08-08_09:55:39
 
 if not "AR18_PARENT_PROCESS" in ${...}:
   import os
@@ -136,10 +136,12 @@ def exec_func(**kwargs):
     ar18.script.include("sudo.exec_as")
     #ar18.script.include("ar18.script.source_or_execute_config")
     #ar18.script.include("ar18.script.version_check")
-      
+
+    combined = Ar18.Struct()
     targets = Ar18.Struct()
     for arg in sys.argv[1:]:
       targets[arg] = Ar18.Struct(config_dir + "/" + arg + ".json5")
+      combined += targets[arg] 
       print(arg)
     print(len(targets))
   
@@ -159,7 +161,9 @@ def exec_func(**kwargs):
     # Remove old installations.
     old_targets = ar18.script.read_targets()
     for key,target in old_targets.items():
-      ar18.sudo.exec_as(f"{target.install_dir}/{key}/uninstall.xsh")
+      uninstall_path = f"{target.install_dir}/{key}/uninstall.xsh"
+      source @(uninstall_path)
+      ar18.system[key].uninstall()
   
     ar18.sudo.exec_as(f"chmod +x {script_dir()}/../install.xsh")
     ar18.log.debug(script_dir())
@@ -173,48 +177,21 @@ def exec_func(**kwargs):
     ar18.sudo.exec_as(f"rm -rf {temp_dir}")
     mkdir -p @(temp_dir)
     cd @(temp_dir)
-
-    for key,target in targets.items():
-      ar18.log.debug(target)
-      for subsystem in target.subsystems:
-        git clone @(f"https://github.com/ar18-linux/{key}.git")
-        install_path = f"{key}/install.xsh"
-        if os.path.isfile(install_path):
-          ar18.sudo.exec_as(f"chmod +x {key}/install.xsh")
-          @(f"{key}/install.xsh")
-    
-    ar18.sudo.exec_as(f"systemctl set-default {$AR18_RUN_LEVEL}")
-
-    """
-    ar18.script.version_check "${@}"
-    
-    for module in "${modules[@]}"; do
-      #git clone \
-      #  --depth 1  \
-      #  --filter=blob:none  \
-      #  --sparse \
-      #  "https://github.com/ar18-linux/${module}" \
-      #;
-      #cd "${module}"
-      #git sparse-checkout set "${module}"
-      git clone "https://github.com/ar18-linux/${module}.git"
-      if [ -f "${module}/install.sh" ]; then
-        ar18.script.execute_with_sudo chmod +x "${module}/install.sh"
-        "${module}/install.sh"
-      fi
-    done
-    
-    ar18.script.execute_with_sudo systemctl set-default "${ar18_run_level}"
-    """
-
+    ar18.log.debug(combined)
+    for subsystem in combined.subsystems:
+      git clone @(f"https://github.com/ar18-linux/{subsystem}.git")
+      install_path = f"{subsystem}/install.xsh"
+      if os.path.isfile(install_path):
+        ar18.sudo.exec_as(f"chmod +x {subsystem}/install.xsh")
+        @(f"{subsystem}/install.xsh")
+    ar18.sudo.exec_as(f"systemctl set-default {$TARGET_RUN_LEVEL}")
   except:
     raise
   finally:
+    ar18.log.debug("finally")
     ar18_extra_cleanup
-
 ##################################SCRIPT_END###################################
-    if not is_parent():
-      ar18.system[subsystem_name()][f"{function_name()}_exit"]()
+    ar18.system[subsystem_name()][f"{function_name()}_exit"]()
     
     
 ar18.system[subsystem_name()][function_name()] = exec_func
@@ -231,12 +208,5 @@ def ar18_on_exit_handler():
 ar18.system[subsystem_name()][f"{function_name()}_exit"] = ar18_on_exit_handler
 
 if is_parent():
-
-
-  @events.on_exit
-  def ar18_on_exit():
-    ar18_on_exit_handler()
-    
-    
   ar18.system[subsystem_name()][function_name()]()
   
